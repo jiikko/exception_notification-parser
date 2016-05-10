@@ -1,0 +1,133 @@
+Delivered-To: username@gmail.com
+Received: by 10.31.231.66 with SMTP id e63csp981585vkh;
+        Sun, 27 Mar 2016 00:59:30 -0700 (PDT)
+X-Received: by 10.66.235.9 with SMTP id ui9mr33611371pac.135.1459065570780;
+        Sun, 27 Mar 2016 00:59:30 -0700 (PDT)
+Return-Path: <error@exmple.com>
+Received: from exmple.com (tk2-218-18808.vs.sakura.ne.jp. [160.16.85.62])
+        by mx.google.com with ESMTPS id ey12si11169351pac.203.2016.03.27.00.59.30
+        for <username@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 27 Mar 2016 00:59:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of error@exmple.com designates 160.16.85.62 as permitted sender) client-ip=160.16.85.62;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of error@exmple.com designates 160.16.85.62 as permitted sender) smtp.mailfrom=error@exmple.com
+Received: from localhost.localdomain (localhost [IPv6:::1])
+	by exmple.com (Postfix) with ESMTP id A701656064A
+	for <username@gmail.com>; Sun, 27 Mar 2016 16:59:28 +0900 (JST)
+Date: Sun, 27 Mar 2016 16:59:28 +0900
+From: notifier <error@exmple.com>
+To: username@gmail.com
+Message-ID: <56f792e0a45de_6345d6b9881182c0@tk2-218-18808.mail>
+Subject: [MAIL_ADMIN] path_to#create
+ (ActionController::InvalidAuthenticityToken)
+ "ActionController::InvalidAuthentic...
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+An ActionController::InvalidAuthenticityToken occurred in path_to#create:
+
+  ActionController::InvalidAuthenticityToken
+
+
+
+-------------------------------
+Request:
+-------------------------------
+
+  * URL        : http://exmple.com/home/path_to
+  * HTTP Method: POST
+  * IP address : 256.183.183.25
+  * Parameters : {"_method"=>"post", "authenticity_token"=>"FPDPElLHYhLSEq5uA8ZehbvekpYpYXFjRFN5Y8CW4M6LrLGglrnX7/+8NNoulXANIJCsYChvfd1EpwUdIY2RJA==", "controller"=>"home/path_to", "action"=>"create"}
+  * Timestamp  : 2016-03-27 16:59:28 +0900
+  * Server : tk2-218-18808
+  * Rails root : /var/www/mail_admin/releases/20160316153334
+  * Process: 25413
+
+-------------------------------
+Session:
+-------------------------------
+
+  * session id: "e6832"
+  * data: {"session_id"=>"e6832",
+   "_csrf_token"=>"HlnWIrPw/RWzI/DWEbMc61UB9s2ce7GmXwV6flNgdZI="}
+
+-------------------------------
+Environment:
+-------------------------------
+
+  * CONTENT_LENGTH                                 : 128
+  * CONTENT_TYPE                                   : application/x-www-form-urlencoded
+  * HTTP_ACCEPT                                    : text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  * HTTP_ACCEPT_ENCODING                           : gzip,deflate,sdch
+  * HTTP_ACCEPT_LANGUAGE                           : ja,en-US;q=0.8,en;q=0.6
+  * HTTP_CACHE_CONTROL                             : max-age=0
+  * HTTP_CONNECTION                                : close
+  * HTTP_HOST                                      : exmple.com
+  * HTTP_ORIGIN                                    : http://exmple.com
+  * HTTP_REFERER                                   : http://exmple.com/home/anonymous_emails/oSrEAR9ePiuHDmXoVhDmaFtq
+  * HTTP_USER_AGENT                                : Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5
+  * HTTP_VERSION                                   : HTTP/1.0
+  * ORIGINAL_FULLPATH                              : /home/path_to
+  * ORIGINAL_SCRIPT_NAME                           :
+  * PATH_INFO                                      : /home/path_to
+  * QUERY_STRING                                   :
+  * REMOTE_ADDR                                    : 127.0.0.1
+  * REQUEST_METHOD                                 : POST
+  * REQUEST_PATH                                   : /home/path_to
+  * REQUEST_URI                                    : /home/path_to
+  * ROUTES_44465160_SCRIPT_NAME                    :
+  * SCRIPT_NAME                                    :
+  * SERVER_NAME                                    : exmple.com
+  * SERVER_PORT                                    : 80
+  * SERVER_PROTOCOL                                : HTTP/1.0
+  * SERVER_SOFTWARE                                : Unicorn 5.0.0
+  * action_controller.instance                     : #<Home::AnonymousMailboxesController:0x00000007892b58>
+  * action_dispatch.backtrace_cleaner              : #<Rails::BacktraceCleaner:0x00000001ce2560>
+  * action_dispatch.cookies                        : #<ActionDispatch::Cookies::CookieJar:0x00000007271080>
+  * action_dispatch.cookies_digest                 :
+  * action_dispatch.cookies_serializer             : json
+  * action_dispatch.encrypted_cookie_salt          : encrypted cookie
+  * action_dispatch.encrypted_signed_cookie_salt   : signed encrypted cookie
+  * action_dispatch.http_auth_salt                 : http authentication
+  * action_dispatch.key_generator                  : #<ActiveSupport::CachingKeyGenerator:0x00000004e69b88>
+  * action_dispatch.logger                         : #<ActiveSupport::Logger:0x00000005550640>
+  * action_dispatch.parameter_filter               : [:password]
+  * action_dispatch.redirect_filter                : []
+  * action_dispatch.request.content_type           : application/x-www-form-urlencoded
+  * action_dispatch.request.formats                : [#<Mime::Type:0x00000001ac8b08 @synonyms=["application/xhtml+xml"], @symbol=:html, @string="text/html", @hash=-3298385115968965944>]
+  * action_dispatch.request.parameters             : {"_method"=>"post", "authenticity_token"=>"FPDPElLHYhLSEq5uA8ZehbvekpYpYXFjRFN5Y8CW4M6LrLGglrnX7/+8NNoulXANIJCsYChvfd1EpwUdIY2RJA==", "controller"=>"home/path_to", "action"=>"create"}
+  * action_dispatch.request.path_parameters        : {:controller=>"home/path_to", :action=>"create"}
+  * action_dispatch.request.query_parameters       : {}
+  * action_dispatch.request.request_parameters     : {"_method"=>"post", "authenticity_token"=>"FPDPElLHYhLSEq5uA8ZehbvekpYpYXFjRFN5Y8CW4M6LrLGglrnX7/+8NNoulXANIJCsYChvfd1EpwUdIY2RJA=="}
+  * action_dispatch.request.unsigned_session_cookie: {"session_id"=>"e6832"}
+  * action_dispatch.request_id                     : dc1b035b-2709-4e42-b874-832009d293ff
+  * action_dispatch.routes                         : #<ActionDispatch::Routing::RouteSet:0x000000054cf810>
+  * action_dispatch.secret_key_base                : 3e6d
+  * action_dispatch.secret_token                   :
+  * action_dispatch.show_detailed_exceptions       : false
+  * action_dispatch.show_exceptions                : true
+  * action_dispatch.signed_cookie_salt             : signed cookie
+  * rack.errors                                    : #<File:0x00000001add530>
+  * rack.hijack                                    : #<Unicorn::HttpParser:0x0000000221db10>
+  * rack.hijack?                                   : true
+  * rack.input                                     : #<Unicorn::TeeInput:0x000000074eb220>
+  * rack.jpmobile                                  : #<Jpmobile::Mobile::Iphone:0x00000007893d78>
+  * rack.logger                                    : #<Logger:0x00000002768b38>
+  * rack.methodoverride.original_method            : POST
+  * rack.multiprocess                              : true
+  * rack.multithread                               : false
+  * rack.request.cookie_hash                       : {}
+  * rack.request.form_hash                         : {"_method"=>"post", "authenticity_token"=>"FPDPElLHYhLSEq5uA8ZehbvekpYpYXFjRFN5Y8CW4M6LrLGglrnX7/+8NNoulXANIJCsYChvfd1EpwUdIY2RJA=="}
+  * rack.request.form_input                        : #<Unicorn::TeeInput:0x000000074eb220>
+  * rack.request.form_vars                         : [FILTERED]
+  * rack.request.query_hash                        : {}
+  * rack.request.query_string                      :
+  * rack.run_once                                  : false
+  * rack.session                                   : #<ActionDispatch::Request::Session:0x000000074e8098>
+  * rack.session.options                           : #<ActionDispatch::Request::Session::Options:0x000000074e8048>
+  * rack.url_scheme                                : http
+  * rack.version                                   : [1, 2]
+  * unicorn.socket                                 : #<Kgio::Socket:0x000000074eb4f0>
