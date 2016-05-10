@@ -9,7 +9,7 @@ describe ExceptionNotification::Parser::Struct do
   end
   let 'case2_struct' do
     mail_raw = File.read(
-      File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'InvalidAuthenticityToken')
+      File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'NoMethodError')
     )
     ExceptionNotification::Parser::Struct.new(mail_raw: mail_raw)
   end
@@ -139,6 +139,11 @@ describe ExceptionNotification::Parser::Struct do
       it { expect(
         struct.environment_request_method
       ).to eq('POST') }
+      context 'case2_struct' do
+        it { expect(
+          case2_struct.environment_request_method
+        ).to eq('GET') }
+      end
     end
   end
 end
