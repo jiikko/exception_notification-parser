@@ -25,6 +25,9 @@ describe ExceptionNotification::Parser::Struct do
           expect(parsed_subject.to_s).to eq '[MAIL_ADMIN] path_to#create (ActionController::InvalidAuthenticityToken)'
         }
       end
+      describe '#email_prefix' do
+        it { expect(parsed_subject.email_prefix).to eq '[MAIL_ADMIN]' }
+      end
       describe '#controller_name' do
         it { expect(parsed_subject.controller_name).to eq 'path_to' }
       end
