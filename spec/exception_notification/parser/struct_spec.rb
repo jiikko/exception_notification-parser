@@ -11,7 +11,7 @@ describe ExceptionNotification::Parser::Struct do
     mail_raw = File.read(
       File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'NoMethodError')
     )
-    ExceptionNotification::Parser::Struct.new(mail_raw: mail_raw)
+    ExceptionNotification::Parser::Struct.new(body: mail_raw)
   end
 
   describe 'subject' do
