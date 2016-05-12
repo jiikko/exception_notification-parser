@@ -1,5 +1,7 @@
 module ExceptionNotification::Parser
   class Struct
+    attr_reader :body, :subject
+
     def initialize(body: nil, mail_raw: nil, subject: nil)
       mail = nil
       @body =
