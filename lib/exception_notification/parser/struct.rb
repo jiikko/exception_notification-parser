@@ -33,7 +33,7 @@ module ExceptionNotification::Parser
     end
 
     def request_timestamp
-      Time.parse(find_label('Timestamp'))
+      Time.parse(find_label('Timestamp')) if find_label('Timestamp')
     end
 
     def requist_rails_root
