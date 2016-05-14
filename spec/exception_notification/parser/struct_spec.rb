@@ -56,6 +56,18 @@ describe ExceptionNotification::Parser::Struct do
         it { expect(parsed_subject.exception_class_name).to eq 'Net::IMAP::NoResponseError' }
       end
     end
+    context '[name] controller#acton (ExceptionClass) のとき2' do
+      let(:subject) { "[MAIL_ADMIN] anonymous_emails#new (NoMethodError) \"undefined method `expired?' for nil:NilClass\"" }
+      describe '#controller_name' do
+        it { expect(parsed_subject.controller_name).to eq 'anonymous_emails' }
+      end
+      describe '#action_name' do
+        it { expect(parsed_subject.action_name).to eq 'new' }
+      end
+      describe '#error_class_name' do
+        it { expect(parsed_subject.exception_class_name).to eq 'NoMethodError' }
+      end
+    end
   end
 
   describe 'request' do
