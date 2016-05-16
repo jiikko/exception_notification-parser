@@ -17,7 +17,7 @@ And then execute:
 ## Usage
 
 ```ruby
-mail_raw = File.read('./mail')
+mail_raw = File.read('./mail') # body with header
 
 # case 1
 struct = ExceptionNotification::Parser.parse(mail_raw: mail_raw)
