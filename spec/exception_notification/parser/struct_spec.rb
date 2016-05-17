@@ -37,13 +37,16 @@ describe ExceptionNotification::Parser::Struct do
       describe '#error_class_name' do
         it { expect(parsed_subject.exception_class_name).to eq 'ActionController::InvalidAuthenticityToken' }
       end
+      describe '#error_message' do
+        it { expect(parsed_subject.error_message).to eq nil }
+      end
     end
 
     context '[name] (ExceptionClass) のとき' do
-      let(:subject) { '[MAIL_ADMIN] (Net::IMAP::NoResponseError) \" Authentication failed.\"' }
+      let(:subject) { "[MAIL_ADMIN] (Net::IMAP::NoResponseError) \" Authentication failed.\"" }
       describe '#to_s' do
         it {
-          expect(parsed_subject.to_s).to eq '[MAIL_ADMIN] (Net::IMAP::NoResponseError) \" Authentication failed.\"'
+          expect(parsed_subject.to_s).to eq "[MAIL_ADMIN] (Net::IMAP::NoResponseError) \" Authentication failed.\""
         }
       end
       describe '#controller_name' do
@@ -54,6 +57,9 @@ describe ExceptionNotification::Parser::Struct do
       end
       describe '#error_class_name' do
         it { expect(parsed_subject.exception_class_name).to eq 'Net::IMAP::NoResponseError' }
+      end
+      describe '#error_message' do
+        it { expect(parsed_subject.error_message).to eq "\" Authentication failed.\"" }
       end
     end
 
@@ -68,6 +74,9 @@ describe ExceptionNotification::Parser::Struct do
       describe '#error_class_name' do
         it { expect(parsed_subject.exception_class_name).to eq 'NoMethodError' }
       end
+      describe '#error_message' do
+        it { expect(parsed_subject.error_message).to eq "\"undefined method `expired?' for nil:NilClass\"" }
+      end
     end
 
     context '[rails-error] # (ActionController::BadRequest) "ActionController::BadRequest" のとき' do
@@ -80,6 +89,9 @@ describe ExceptionNotification::Parser::Struct do
       end
       describe '#error_class_name' do
         it { expect(parsed_subject.exception_class_name).to eq 'ActionController::BadRequest' }
+      end
+      describe '#error_message' do
+        it { expect(parsed_subject.error_message).to eq "\"ActionController::BadRequest\"" }
       end
     end
   end
@@ -118,6 +130,7 @@ describe ExceptionNotification::Parser::Struct do
     end
     describe '#session_data' do
       it {
+        skip
         expect(
           struct.session_data
         ).to eq({
