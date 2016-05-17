@@ -23,7 +23,7 @@ class ExceptionNotification::Parser::Subject
       return
     end
 
-    raise('no match pattaern subject!')
+    raise("#{subject}:no match pattaern subject!")
   end
 
   def to_s
