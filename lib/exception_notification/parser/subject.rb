@@ -15,7 +15,7 @@ class ExceptionNotification::Parser::Subject
       return
     end
 
-    if %r!([^ ]+) ([^#]+?)#(\w+) \(([^\)]+?)\)!m =~ subject
+    if %r!([^ ]+) ([^#]*?)#(\w*?) \(([^\)]+?)\)!m =~ subject
       @email_prefix = $1
       @controller_name = $2
       @action_name = $3
