@@ -102,7 +102,7 @@ module ExceptionNotification::Parser
 
     def find_label_for_hash(name)
       data = {}
-      lines = find(/ *\* #{name} *: {(.*?)}$/m)
+      lines = find(/ *\* #{name} *?: {?(.*?)}?$/m)
       lines.split(',').each do |line|
         splited = line.gsub('"', '').strip.split('=>')
         data[splited[0]] = splited[1]
