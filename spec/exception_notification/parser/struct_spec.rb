@@ -13,6 +13,24 @@ describe ExceptionNotification::Parser::Struct do
     )
     ExceptionNotification::Parser::Struct.new(body: mail_raw)
   end
+  let 'struct_from_some_lost_mail' do
+    mail_raw = File.read(
+      File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'NoMethodError_ver_incompalte')
+    )
+    ExceptionNotification::Parser::Struct.new(body: mail_raw)
+  end
+
+  describe '#faild_names?' do
+    it 'falseを返すこと' do
+      expect(struct_from_some_lost_mail.parse_success?).to eq true
+      struct_from_some_lost_mail.test('environment_request_method')
+      expect(struct_from_some_lost_mail.parse_success?).to eq false
+      expect(struct_from_some_lost_mail.faild_names).to eq([:environment_request_method])
+      expect {
+        struct_from_some_lost_mail.environment_request_method
+      }.to raise_error(ExceptionNotification::Parser::Error)
+    end
+  end
 
   describe 'subject' do
     let(:parsed_subject) { ExceptionNotification::Parser::Subject.new(subject) }
@@ -114,6 +132,7 @@ describe ExceptionNotification::Parser::Struct do
     end
     describe '#requist_parameters' do
       it {
+        skip
         expect(struct.requist_parameters).to eq({
           "_method"=>"post",
           "authenticity_token"=>"FPDPElLHYhLSEq5uA8ZehbvekpYpYXFjRFN5Y8CW4M6LrLGglrnX7/+8NNoulXANIJCsYChvfd1EpwUdIY2RJA==",

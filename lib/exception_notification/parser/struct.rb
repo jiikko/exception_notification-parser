@@ -1,6 +1,10 @@
 module ExceptionNotification::Parser
   class Struct
-    attr_reader :body
+    attr_reader :body, :parse_faild_names
+
+    NAME_TABLE = {
+      request_url: 'URL',
+    }
 
     def initialize(body: nil, mail_raw: nil, subject: nil)
       mail = nil
@@ -12,10 +16,26 @@ module ExceptionNotification::Parser
           body
       end
       @subject = subject || mail && mail.subject
+      @parse_faild_names = []
+      @not_found_names = []
     end
 
     def subject
       Subject.new(@subject)
+    end
+
+    def parse_success?
+      @parse_faild_names.empty?
+    end
+
+    def test(name)
+      binding.pry
+      if exists?(name)
+        return(find_label(name, throw_exception: false) || @parse_faild_names << name)
+      else
+        @not_found_names << name
+      end
+      return false
     end
 
     def has_subject?
@@ -23,7 +43,7 @@ module ExceptionNotification::Parser
     end
 
     def request_url
-      find(/URL[ ]*: (.*)$/)
+      find_label('URL')
     end
 
     def request_http_method
@@ -42,17 +62,17 @@ module ExceptionNotification::Parser
       find_label('Rails root')
     end
 
-    def requist_parameters
-      find_label_for_hash(:Parameters)
-    end
+    # def requist_parameters
+    #   find_label_for_hash(:Parameters)
+    # end
 
     def session_id
       find_label('session id').gsub('"', '')
     end
 
-    def session_data
-      find_label_for_hash(:data)
-    end
+    # def session_data
+    #   find_label_for_hash(:data)
+    # end
 
     def environment_content_length
       find_label(:CONTENT_LENGTH).to_i
@@ -88,30 +108,30 @@ module ExceptionNotification::Parser
 
     private
 
-    def find(regexp)
-      @body =~ regexp
-      $1 || raise(ExceptionNotification::Parser::Error, 'parse failed')
-    end
-
-    def find_label(name)
-      name_to_s = name.to_s
-      if has_key?(name_to_s)
-        find(/#{name_to_s} *: (.+?)$/)
-      end
-    end
-
-    def find_label_for_hash(name)
-      data = {}
-      lines = find(/ *\* #{name} *?: {?(.*?)}?$/m)
-      lines.split(',').each do |line|
-        splited = line.gsub('"', '').strip.split('=>')
-        data[splited[0]] = splited[1]
-      end
-      data
-    end
-
-    def has_key?(name)
+    def exists?(name)
       @body.include?(name)
     end
+
+    def find(regexp, throw_exception: )
+      @body =~ regexp
+      $1 || (throw_exception ? raise(ExceptionNotification::Parser::Error, 'parse failed') : nil)
+    end
+
+    def find_label(name, throw_exception: true)
+      name_to_s = name.to_s
+      if @body.include?(name_to_s)
+        find(/#{name_to_s} *: (.+?)$/, throw_exception: throw_exception)
+      end
+    end
+
+    # def find_label_for_hash(name)
+    #   data = {}
+    #   lines = find(/ *\* #{name} *?: {?(.*?)}?$/m)
+    #   lines.split(',').each do |line|
+    #     splited = line.gsub('"', '').strip.split('=>')
+    #     data[splited[0]] = splited[1]
+    #   end
+    #   data
+    # end
   end
 end

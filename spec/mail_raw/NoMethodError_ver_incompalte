@@ -1,0 +1,107 @@
+A NoMethodError occurred in anonymous_emails#new:
+
+  undefined method `expired?' for nil:NilClass
+  app/controllers/home/send/anonymous_emails_controller.rb:54:in `expired_mailbox?'
+
+
+-------------------------------
+Request:
+-------------------------------
+
+  * URL        :
+  * HTTP Method: GET
+  * IP address : 256.183.183.25
+  * Parameters : {"_method"=>"post", "authenticity_token"=>"FPDPElLHYhLSEq5uA8ZehbvekpYpYXFjRFN5Y8CW4M6LrLGglrnX7/+8NNoulXANIJCsYChvfd1EpwUdIY2RJA==", "controller"=>"home/path_to", "action"=>"create"}
+  * Timestamp  : 2016-05-05 22:08:02 +0900
+  * Server : tk2-218-18808
+  * Rails root : /var/www/mail_admin/releases/20160316153334
+  * Process: 5343
+
+-------------------------------
+Session:
+-------------------------------
+
+  * session id: "e6832"
+  * data: {"session_id"=>"e6832",
+   "_csrf_token"=>"HlnWIrPw/RWzI/DWEbMc61UB9s2ce7GmXwV6flNgdZI="}
+
+-------------------------------
+Environment:
+-------------------------------
+
+  * HTTP_ACCEPT                                    : text/html, application/xhtml+xml, */*
+  * HTTP_ACCEPT_ENCODING                           : gzip, deflate
+  * HTTP_ACCEPT_LANGUAGE                           : ja-JP
+  * HTTP_CONNECTION                                : close
+  * HTTP_COOKIE                                    : xxx
+  * HTTP_DNT                                       : 1
+  * HTTP_HOST                                      : instance-email.com
+  * HTTP_USER_AGENT                                : Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko
+  * HTTP_VERSION                                   : HTTP/1.0
+  * HTTP_X_FORWARDED_FOR                           : 229.107.90.139
+  * ORIGINAL_FULLPATH                              : /home/path_to
+  * ORIGINAL_SCRIPT_NAME                           :
+  * PATH_INFO                                      : /home/path_to
+  * QUERY_STRING                                   :
+  * REMOTE_ADDR                                    : 127.0.0.1
+  REQUEST_METHOD
+  * REQUEST_PATH                                   : /home/path_to
+  * REQUEST_URI                                    : /home/path_to
+  * ROUTES_41609200_SCRIPT_NAME                    :
+  * SCRIPT_NAME                                    :
+  * SERVER_NAME                                    : exmple.com
+  * SERVER_PORT                                    : 80
+  * SERVER_PROTOCOL                                : HTTP/1.0
+  * SERVER_SOFTWARE                                : Unicorn 5.0.0
+  * action_controller.instance                     : #<Home::Send::AnonymousEmailsController:0x00000007346e88>
+  * action_dispatch.backtrace_cleaner              : #<Rails::BacktraceCleaner:0x0000000176d850>
+  * action_dispatch.cookies                        : #<ActionDispatch::Cookies::CookieJar:0x00000005b6d8e8>
+  * action_dispatch.cookies_digest                 :
+  * action_dispatch.cookies_serializer             : json
+  * action_dispatch.encrypted_cookie_salt          : encrypted cookie
+  * action_dispatch.encrypted_signed_cookie_salt   : signed encrypted cookie
+  * action_dispatch.http_auth_salt                 : http authentication
+  * action_dispatch.key_generator                  : #<ActiveSupport::CachingKeyGenerator:0x000000048f84d8>
+  * action_dispatch.logger                         : #<ActiveSupport::Logger:0x000000021ac0a0>
+  * action_dispatch.parameter_filter               : [:password]
+  * action_dispatch.redirect_filter                : []
+  * action_dispatch.request.content_type           :
+  * action_dispatch.request.formats                : [#<Mime::Type:0x0000000156f648 @synonyms=["application/xhtml+xml"], @symbol=:html, @string="text/html", @hash=-1757628026511530427>]
+  * action_dispatch.request.parameters             : {"controller"=>"home/send/anonymous_emails", "action"=>"new", "anonymous_mailbox_id"=>"smmeh3w"}
+  * action_dispatch.request.path_parameters        : {:controller=>"home/send/anonymous_emails", :action=>"new", :anonymous_mailbox_id=>"smmeh3w"}
+  * action_dispatch.request.query_parameters       : {}
+  * action_dispatch.request.request_parameters     : {}
+  * action_dispatch.request.unsigned_session_cookie: {"session_id"=>"e6832"}
+  * action_dispatch.request_id                     : 706a741
+  * action_dispatch.routes                         : #<ActionDispatch::Routing::RouteSet:0x00000004f5cfe0>
+  * action_dispatch.secret_key_base                : 3e6d1
+  * action_dispatch.secret_token                   :
+  * action_dispatch.show_detailed_exceptions       : false
+  * action_dispatch.show_exceptions                : true
+  * action_dispatch.signed_cookie_salt             : signed cookie
+  * rack.errors                                    : #<File:0x00000001575548>
+  * rack.hijack                                    : #<Unicorn::HttpParser:0x00000001cc6630>
+  * rack.hijack?                                   : true
+  * rack.input                                     : #<StringIO:0x00000002284f68>
+  * rack.jpmobile                                  :
+  * rack.logger                                    : #<Logger:0x000000021faef8>
+  * rack.multiprocess                              : true
+  * rack.multithread                               : false
+  * rack.request.cookie_hash                       : {}
+  * rack.request.query_hash                        : {}
+  * rack.request.query_string                      :
+  * rack.run_once                                  : false
+  * rack.session                                   : #<ActionDispatch::Request::Session:0x00000006b74ed0>
+  * rack.session.options                           : #<ActionDispatch::Request::Session::Options:0x00000006b74e30>
+  * rack.url_scheme                                : http
+  * rack.version                                   : [1, 2]
+  * unicorn.socket                                 : #<Kgio::Socket:0x00000006b777c0>
+
+-------------------------------
+Backtrace:
+-------------------------------
+
+  app/controllers/home/send/anonymous_emails_controller.rb:54:in `expired_mailbox?'
+  app/controllers/home/send/anonymous_emails_controller.rb:4:in `new'
+
+
