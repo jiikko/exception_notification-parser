@@ -23,11 +23,11 @@ describe ExceptionNotification::Parser::Struct do
   describe '#faild_names?' do
     it 'falseを返すこと' do
       expect(struct_from_some_lost_mail.parse_success?).to eq true
-      struct_from_some_lost_mail.test('environment_request_method')
+      struct_from_some_lost_mail.test(:environment_request_method)
       expect(struct_from_some_lost_mail.parse_success?).to eq false
-      expect(struct_from_some_lost_mail.faild_names).to eq([:environment_request_method])
+      expect(struct_from_some_lost_mail.parse_faild_names).to eq([:environment_request_method])
       expect {
-        struct_from_some_lost_mail.environment_request_method
+        struct_from_some_lost_mail.get(:environment_request_method)
       }.to raise_error(ExceptionNotification::Parser::Error)
     end
   end
@@ -116,19 +116,19 @@ describe ExceptionNotification::Parser::Struct do
 
   describe 'request' do
     describe '#request_url' do
-      it { expect(struct.request_url).to eq('http://exmple.com/home/path_to') }
+      it { expect(struct.get(:request_url)).to eq('http://exmple.com/home/path_to') }
     end
     describe '#request_http_method' do
-      it { expect(struct.request_http_method).to eq('POST') }
+      it { expect(struct.get(:request_http_method)).to eq('POST') }
     end
     describe '#request_ip_address' do
-      it { expect(struct.request_ip_address).to eq('256.183.183.25') }
+      it { expect(struct.get(:request_ip_address)).to eq('256.183.183.25') }
     end
     describe '#request_timestamp' do
-      it { expect(struct.request_timestamp).to eq(Time.parse '2016-03-27 16:59:28 +0900') }
+      it { expect(struct.get(:request_timestamp)).to eq(Time.parse '2016-03-27 16:59:28 +0900') }
     end
     describe '#requist_rails_root' do
-      it { expect(struct.requist_rails_root).to eq('/var/www/mail_admin/releases/20160316153334') }
+      it { expect(struct.get(:requist_rails_root)).to eq('/var/www/mail_admin/releases/20160316153334') }
     end
     describe '#requist_parameters' do
       it {
@@ -145,7 +145,7 @@ describe ExceptionNotification::Parser::Struct do
 
   describe 'session' do
     describe '#session_id' do
-      it { expect(struct.session_id).to eq('e6832') }
+      it { expect(struct.get(:session_id)).to eq('e6832') }
     end
     describe '#session_data' do
       it {
@@ -163,46 +163,46 @@ describe ExceptionNotification::Parser::Struct do
   describe 'environment' do
     describe '#environment_content_length' do
       it { expect(
-        struct.environment_content_length
-      ).to eq(128) }
+        struct.get(:environment_content_length)
+      ).to eq('128') }
     end
     describe '#environment_content_type' do
       it { expect(
-        struct.environment_content_type
+        struct.get(:environment_content_type)
       ).to eq('application/x-www-form-urlencoded') }
     end
     describe '#environment_http_host' do
       it { expect(
-        struct.environment_http_host
+        struct.get(:environment_http_host)
       ).to eq('exmple.com') }
     end
     describe '#environment_http_user_agent' do
       it { expect(
-        struct.environment_http_user_agent
+        struct.get(:environment_http_user_agent)
       ).to eq('Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5') }
     end
     describe '#environment_remote_addr' do
       it { expect(
-        struct.environment_remote_addr
+        struct.get(:environment_remote_addr)
       ).to eq('127.0.0.1') }
     end
     describe '#environment_request_path' do
       it { expect(
-        struct.environment_request_path
+        struct.get(:environment_request_path)
       ).to eq('/home/path_to') }
     end
     describe '#environment_request_uri' do
       it { expect(
-        struct.environment_request_uri
+        struct.get(:environment_request_uri)
       ).to eq('/home/path_to') }
     end
     describe '#environment_request_method' do
       it { expect(
-        struct.environment_request_method
+        struct.get(:environment_request_method)
       ).to eq('POST') }
       context 'case2_struct' do
         it { expect(
-          case2_struct.environment_request_method
+          case2_struct.get(:environment_request_method)
         ).to eq('GET') }
       end
     end

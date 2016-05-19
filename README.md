@@ -21,11 +21,15 @@ mail_raw = File.read('./mail') # body with header
 
 # case 1
 struct = ExceptionNotification::Parser.parse(mail_raw: mail_raw)
+struct.get(:exception_class_name)
+struct.get(:request_url)
 
 # case 2
 mail = Mail.new(mail_raw)
 body = mail.body.decoded.toutf8
 struct = ExceptionNotification::Parser.parse(body: body, subject: mail.suject)
+struct.get(:exception_class_name)
+struct.get(:request_url)
 ```
 
 ### accessible list
@@ -39,9 +43,7 @@ request_http_method
 request_ip_address
 request_timestamp
 requist_rails_root
-requist_parameters # hash
 session_id
-session_data # hash
 environment_content_length
 environment_content_type
 environment_http_host

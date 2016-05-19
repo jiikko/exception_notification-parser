@@ -14,7 +14,7 @@ describe ExceptionNotification::Parser do
   describe '.parse' do
     it '#request_url をもつこと' do
       expect(
-        ExceptionNotification::Parser.parse(mail_raw: mail_raw).respond_to?(:request_url)
+        !!ExceptionNotification::Parser.parse(mail_raw: mail_raw).get(:request_url)
       ).to eq true
     end
 
@@ -33,7 +33,7 @@ describe ExceptionNotification::Parser do
         )
         mail = Mail.new(raw)
         expect {
-          ExceptionNotification::Parser.parse(mail_raw: mail).request_url
+          ExceptionNotification::Parser.parse(mail_raw: mail).get(:request_url)
         }.to raise_error(ExceptionNotification::Parser::Error)
       end
     end
