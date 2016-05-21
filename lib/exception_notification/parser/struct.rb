@@ -1,6 +1,6 @@
 module ExceptionNotification::Parser
   class Struct
-    attr_reader :body, :parse_faild_names
+    attr_reader :body, :parse_failure_names, :not_found_names
 
     NAME_TABLE = {
       # body
@@ -36,7 +36,7 @@ module ExceptionNotification::Parser
           body
       end
       @subject = subject || mail && mail.subject
-      @parse_faild_names = []
+      @parse_failure_names = []
       @not_found_names = []
     end
 
@@ -45,15 +45,18 @@ module ExceptionNotification::Parser
     end
 
     def parse_success?
-      @parse_faild_names.empty?
+      @parse_failure_names.empty? && @not_found_names.empty?
     end
 
     def test(name)
-      label = NAME_TABLE[name]
+      label = NAME_TABLE[name] || name
       if exists?(label)
-        return(find_label(label, throw_exception: false) || @parse_faild_names << name)
+        return(
+          find_label(label, throw_exception: false) || \
+            (@parse_failure_names << name) unless @parse_failure_names.include?(name)
+        )
       else
-        @not_found_names << name
+        (@not_found_names << name) unless @not_found_names.include?(name)
       end
       return false
     end
@@ -83,6 +86,7 @@ module ExceptionNotification::Parser
     private
 
     def exists?(name)
+      name = name.to_s unless name.is_a?(String)
       @body.include?(name)
     end
 

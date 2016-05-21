@@ -13,22 +13,39 @@ describe ExceptionNotification::Parser::Struct do
     )
     ExceptionNotification::Parser::Struct.new(body: mail_raw)
   end
-  let 'struct_from_some_lost_mail' do
+  let 'some_lost_names_struct' do
     mail_raw = File.read(
       File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'NoMethodError_ver_incompalte')
     )
     ExceptionNotification::Parser::Struct.new(body: mail_raw)
   end
 
-  describe '#faild_names?' do
-    it 'falseを返すこと' do
-      expect(struct_from_some_lost_mail.parse_success?).to eq true
-      struct_from_some_lost_mail.test(:environment_request_method)
-      expect(struct_from_some_lost_mail.parse_success?).to eq false
-      expect(struct_from_some_lost_mail.parse_faild_names).to eq([:environment_request_method])
-      expect {
-        struct_from_some_lost_mail.get(:environment_request_method)
-      }.to raise_error(ExceptionNotification::Parser::Error)
+  context 'parse some_lost_names_struct' do
+    describe '#not_found_names' do
+      it '配列を返すこと' do
+        expect(some_lost_names_struct.parse_success?).to eq true
+        some_lost_names_struct.test(:waiwai_name)
+        some_lost_names_struct.test(:waiwai_name)
+        some_lost_names_struct.test(:foo_name)
+        expect(some_lost_names_struct.not_found_names.size).to eq 2
+        expect(some_lost_names_struct.parse_success?).to eq false
+        expect(some_lost_names_struct.not_found_names).to match_array([
+          :waiwai_name, :foo_name
+        ])
+      end
+    end
+
+    describe 'parse_failure_names' do
+      it '配列を返すこと' do
+        expect(some_lost_names_struct.parse_success?).to eq true
+        some_lost_names_struct.test(:environment_request_method)
+        expect(some_lost_names_struct.parse_success?).to eq false
+        expect(some_lost_names_struct.parse_failure_names).to eq([:environment_request_method])
+        expect(some_lost_names_struct.not_found_names).to eq([])
+        expect {
+          some_lost_names_struct.get(:environment_request_method)
+        }.to raise_error(ExceptionNotification::Parser::Error)
+      end
     end
   end
 
@@ -130,33 +147,11 @@ describe ExceptionNotification::Parser::Struct do
     describe '#requist_rails_root' do
       it { expect(struct.get(:requist_rails_root)).to eq('/var/www/mail_admin/releases/20160316153334') }
     end
-    describe '#requist_parameters' do
-      it {
-        skip
-        expect(struct.requist_parameters).to eq({
-          "_method"=>"post",
-          "authenticity_token"=>"FPDPElLHYhLSEq5uA8ZehbvekpYpYXFjRFN5Y8CW4M6LrLGglrnX7/+8NNoulXANIJCsYChvfd1EpwUdIY2RJA==",
-          "controller"=>"home/path_to",
-          "action"=>"create"
-        })
-      }
-    end
   end
 
   describe 'session' do
     describe '#session_id' do
       it { expect(struct.get(:session_id)).to eq('e6832') }
-    end
-    describe '#session_data' do
-      it {
-        skip
-        expect(
-          struct.session_data
-        ).to eq({
-          "session_id" =>  "e6832",
-          "_csrf_token" => "HlnWIrPw/RWzI/DWEbMc61UB9s2ce7GmXwV6flNgdZI="
-        })
-      }
     end
   end
 

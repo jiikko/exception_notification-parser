@@ -34,9 +34,10 @@ struct.get(:request_url)
 
 ### accessible list
 ```
-subject.exception_class_name
-subject.action_name
-subject.controller
+exception_class_name
+action_name
+controller
+error_message
 
 request_url
 request_http_method
