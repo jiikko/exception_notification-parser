@@ -44,12 +44,20 @@ module ExceptionNotification::Parser
           body
       end
       @subject = subject || mail && mail.subject
-      @parse_failure_names = []
-      @not_found_names = []
+      @parse_failure_names = Set.new
+      @not_found_names = Set.new
     end
 
     def subject
       @subject_instance ||= Subject.new(@subject)
+    end
+
+    def parse_failure_names
+      @parse_failure_names.to_a
+    end
+
+    def not_found_names
+      @not_found_names.to_a
     end
 
     def parse_success?
@@ -59,14 +67,12 @@ module ExceptionNotification::Parser
     def test(name)
       label = NAME_TABLE[name] || (name if SUBJECT_NAMES.include?(name)) || name
       if exists?(label)
-        return(
-          find_label(label, throw_exception: false) || \
-            (@parse_failure_names << name) unless @parse_failure_names.include?(name)
-        )
+        value = find_label(label, throw_exception: false)
+        return (value && true) || ((@parse_failure_names << name) && false)
       else
-        (@not_found_names << name) unless @not_found_names.include?(name)
+        @not_found_names << name
+        return false
       end
-      return false
     end
 
     def has_subject?
