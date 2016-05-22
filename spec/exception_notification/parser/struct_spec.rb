@@ -42,8 +42,11 @@ describe ExceptionNotification::Parser::Struct do
         expect(some_lost_names_struct.parse_success?).to eq false
         expect(some_lost_names_struct.parse_failure_names).to eq([:environment_request_method])
         expect(some_lost_names_struct.not_found_names).to eq([])
-        expect {
+        expect(
           some_lost_names_struct.get(:environment_request_method)
+        ).to eq false
+        expect {
+          some_lost_names_struct.get!(:environment_request_method)
         }.to raise_error(ExceptionNotification::Parser::Error)
       end
     end

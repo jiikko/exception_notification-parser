@@ -73,23 +73,30 @@ module ExceptionNotification::Parser
       !!@subject
     end
 
-    def get(label)
-      return raise('not found name') unless NAME_TABLE.key?(label)
-      case label
-      when :request_timestamp
-        Time.parse(find_label('Timestamp')) if find_label('Timestamp')
-      when SUBJECT_NAMES.include?(label)
-        subject.public_send(label)
-      else
-        find_label(NAME_TABLE[label])
-      end
+    def get(name)
+      test(name)
+      get_value(name) || false
     end
 
-    def get!(label)
-      get(label)
+    def get!(name)
+      get_value(name, throw_exception: true)
     end
 
     private
+
+    def get_value(name, throw_exception: false)
+      if !NAME_TABLE.key?(name) && throw_exception
+        return raise('not found name')
+      end
+      case name
+      when :request_timestamp
+        Time.parse(find_label('Timestamp')) if find_label('Timestamp', throw_exception: throw_exception)
+      when SUBJECT_NAMES.include?(name)
+        subject.public_send(name)
+      else
+        find_label(NAME_TABLE[name], throw_exception: throw_exception)
+      end
+    end
 
     def exists?(name)
       name = name.to_s unless name.is_a?(String)
