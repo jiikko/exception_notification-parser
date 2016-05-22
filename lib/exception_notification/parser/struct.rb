@@ -70,8 +70,6 @@ module ExceptionNotification::Parser
       case label
       when :request_timestamp
         Time.parse(find_label('Timestamp')) if find_label('Timestamp')
-      when :session_id
-        find_label('session id').gsub('"', '')
       when :action_name, \
         :controller_name, \
         :email_prefix, \
@@ -81,6 +79,10 @@ module ExceptionNotification::Parser
       else
         find_label(NAME_TABLE[label])
       end
+    end
+
+    def get!(label)
+      get(label)
     end
 
     private
@@ -98,7 +100,7 @@ module ExceptionNotification::Parser
     def find_label(name, throw_exception: true)
       name_to_s = name.to_s
       if @body.include?(name_to_s)
-        find(/#{name_to_s} *: (.+?)$/, throw_exception: throw_exception)
+        find(/#{name_to_s} *: "?(.+?)"?$/, throw_exception: throw_exception)
       end
     end
   end
