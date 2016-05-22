@@ -98,7 +98,7 @@ module ExceptionNotification::Parser
       when :request_timestamp
         Time.parse(find_label('Timestamp')) if find_label('Timestamp', throw_exception: throw_exception)
       when SUBJECT_NAMES.include?(name)
-        subject.public_send(name)
+        subject.public_send(name) # TODO subject is not raise
       else
         find_label(NAME_TABLE[name], throw_exception: throw_exception)
       end
