@@ -26,6 +26,14 @@ module ExceptionNotification::Parser
       error_message: nil,
     }
 
+    SUBJECT_NAMES = [
+      :action_name,
+      :controller_name,
+      :email_prefix,
+      :exception_class_name,
+      :error_message
+    ]
+
     def initialize(body: nil, mail_raw: nil, subject: nil)
       mail = nil
       @body =
@@ -49,7 +57,7 @@ module ExceptionNotification::Parser
     end
 
     def test(name)
-      label = NAME_TABLE[name] || name
+      label = NAME_TABLE[name] || (name if SUBJECT_NAMES.include?(name)) || name
       if exists?(label)
         return(
           find_label(label, throw_exception: false) || \
@@ -70,11 +78,7 @@ module ExceptionNotification::Parser
       case label
       when :request_timestamp
         Time.parse(find_label('Timestamp')) if find_label('Timestamp')
-      when :action_name, \
-        :controller_name, \
-        :email_prefix, \
-        :exception_class_name, \
-        :error_message
+      when SUBJECT_NAMES.include?(label)
         subject.public_send(label)
       else
         find_label(NAME_TABLE[label])
