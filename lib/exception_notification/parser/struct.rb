@@ -81,7 +81,7 @@ module ExceptionNotification::Parser
 
     def get(name)
       test(name)
-      get_value(name) || false
+      get_value(name) # return nil if failure
     end
 
     def get!(name)
