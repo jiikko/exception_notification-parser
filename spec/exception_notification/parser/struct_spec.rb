@@ -3,19 +3,19 @@ require 'spec_helper'
 describe ExceptionNotification::Parser::Struct do
   let 'struct' do
     mail_raw = File.read(
-      File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'InvalidAuthenticityToken')
+      File.join(ExceptionNotification::Parser.spec_root, 'mail', 'InvalidAuthenticityToken')
     )
     ExceptionNotification::Parser::Struct.new(mail_raw: mail_raw)
   end
   let 'case2_struct' do
     mail_raw = File.read(
-      File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'NoMethodError')
+      File.join(ExceptionNotification::Parser.spec_root, 'mail', 'NoMethodError')
     )
     ExceptionNotification::Parser::Struct.new(body: mail_raw)
   end
   let 'some_lost_names_struct' do
     mail_raw = File.read(
-      File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'NoMethodError_ver_incompalte')
+      File.join(ExceptionNotification::Parser.spec_root, 'mail', 'NoMethodError_ver_incompalte')
     )
     ExceptionNotification::Parser::Struct.new(body: mail_raw)
   end

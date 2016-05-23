@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ExceptionNotification::Parser do
   let 'mail_raw' do
     File.read(
-      File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'InvalidAuthenticityToken')
+      File.join(ExceptionNotification::Parser.spec_root, 'mail', 'InvalidAuthenticityToken')
     )
   end
 
@@ -29,7 +29,7 @@ describe ExceptionNotification::Parser do
     context 'parse に失敗するとき' do
       it 'catch exception' do
         body = File.read(
-          File.join(ExceptionNotification::Parser.spec_root, 'mail_raw', 'NoMethodError_ver_incompalte')
+          File.join(ExceptionNotification::Parser.spec_root, 'mail', 'NoMethodError_ver_incompalte')
         )
         expect(
           ExceptionNotification::Parser.parse(body: body).get(:request_url)
