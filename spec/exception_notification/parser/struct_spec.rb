@@ -44,7 +44,7 @@ describe ExceptionNotification::Parser::Struct do
         expect(some_lost_names_struct.not_found_names).to eq([])
         expect(
           some_lost_names_struct.get(:environment_request_method)
-        ).to eq false
+        ).to eq nil
         expect {
           some_lost_names_struct.get!(:environment_request_method)
         }.to raise_error(ExceptionNotification::Parser::Error)

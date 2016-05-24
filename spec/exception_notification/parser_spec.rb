@@ -25,16 +25,5 @@ describe ExceptionNotification::Parser do
         ).to eq false
       end
     end
-
-    context 'parse に失敗するとき' do
-      it 'catch exception' do
-        body = File.read(
-          File.join(ExceptionNotification::Parser.spec_root, 'mail', 'NoMethodError_ver_incompalte')
-        )
-        expect(
-          ExceptionNotification::Parser.parse(body: body).get(:request_url)
-        ).to eq false
-      end
-    end
   end
 end
