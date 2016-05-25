@@ -23,6 +23,7 @@ mail_raw = File.read('./mail') # body with header
 struct = ExceptionNotification::Parser.parse(mail_raw: mail_raw)
 struct.get(:exception_class_name)
 struct.get(:request_url)
+struct.subject.get(:mail_prefix)
 
 # case 2
 mail = Mail.new(mail_raw)

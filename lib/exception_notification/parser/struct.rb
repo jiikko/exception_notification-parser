@@ -26,6 +26,7 @@ module ExceptionNotification::Parser
       error_message: nil,
     }
 
+    # TODO
     SUBJECT_NAMES = [
       :action_name,
       :controller_name,
@@ -65,7 +66,7 @@ module ExceptionNotification::Parser
     end
 
     def test(name)
-      label = NAME_TABLE[name] || (name if SUBJECT_NAMES.include?(name)) || name
+      label = NAME_TABLE[name] || name
       if exists?(label)
         value = find_label(label, throw_exception: false)
         return (value && true) || ((@parse_failure_names << name) && false)
@@ -97,8 +98,6 @@ module ExceptionNotification::Parser
       case name
       when :request_timestamp
         Time.parse(find_label('Timestamp')) if find_label('Timestamp', throw_exception: throw_exception)
-      when SUBJECT_NAMES.include?(name)
-        subject.public_send(name) # TODO subject is not raise
       else
         find_label(NAME_TABLE[name], throw_exception: throw_exception)
       end

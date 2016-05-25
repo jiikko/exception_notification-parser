@@ -13,9 +13,13 @@ describe ExceptionNotification::Parser do
 
   describe '.parse' do
     it '#request_url をもつこと' do
-      expect(
-        !!ExceptionNotification::Parser.parse(mail_raw: mail_raw).get(:request_url)
-      ).to eq true
+      struct = ExceptionNotification::Parser.parse(mail_raw: mail_raw)
+      subject = struct.subject
+      expect(!!struct.get(:request_url)).to eq true
+      expect(subject.get(:email_prefix)).to eq '[MAIL_ADMIN]'
+      expect(subject.get(:error_message)).to eq nil
+      expect(subject.get!(:error_message)).to eq nil
+      expect(subject.get(:controller_name)).to eq 'path_to'
     end
 
     context 'subject 引数がblank' do
