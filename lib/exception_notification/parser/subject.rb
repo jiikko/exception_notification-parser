@@ -32,7 +32,7 @@ class ExceptionNotification::Parser::Subject
 
   def find_value(name)
     return unless NAMES.include?(name)
-    set_values!
+    set_values! unless defined?(@parse_failure)
     instance_variable_get("@#{name}")
   end
 
