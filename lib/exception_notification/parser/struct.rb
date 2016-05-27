@@ -10,30 +10,15 @@ module ExceptionNotification::Parser
       request_timestamp: 'Timestamp',
       requist_rails_root: 'Rails root',
       session_id: 'session id',
-      environment_content_length: :CONTENT_LENGTH,
-      environment_content_type: :CONTENT_TYPE,
+      environment_content_length: 'CONTENT_LENGTH',
+      environment_content_type: 'CONTENT_TYPE',
       environment_http_host: 'HTTP_HOST',
       environment_http_user_agent: 'HTTP_USER_AGENT',
       environment_remote_addr: 'REMOTE_ADDR',
       environment_request_path: 'REQUEST_PATH',
       environment_request_uri: 'REQUEST_URI',
       environment_request_method: 'REQUEST_METHOD',
-      # subject
-      action_name: nil,
-      controller_name: nil,
-      email_prefix: nil,
-      exception_class_name: nil,
-      error_message: nil,
     }
-
-    # TODO
-    SUBJECT_NAMES = [
-      :action_name,
-      :controller_name,
-      :email_prefix,
-      :exception_class_name,
-      :error_message
-    ]
 
     def initialize(body: nil, mail_raw: nil, subject: nil)
       mail = nil
@@ -66,9 +51,8 @@ module ExceptionNotification::Parser
     end
 
     def test(name)
-      label = NAME_TABLE[name] || name
-      if exists?(label)
-        value = find_label(label, throw_exception: false)
+      if exists?(NAME_TABLE[name] || name)
+        value = find_value(name, throw_exception: false)
         return (value && true) || ((@parse_failure_names << name) && false)
       else
         @not_found_names << name
@@ -82,42 +66,34 @@ module ExceptionNotification::Parser
 
     def get(name)
       test(name)
-      get_value(name) # return nil if failure
+      find_value(name, throw_exception: false)
     end
 
     def get!(name)
-      get_value(name, throw_exception: true)
+      find_value(name, throw_exception: true)
     end
 
     private
-
-    def get_value(name, throw_exception: false)
-      if !NAME_TABLE.key?(name) && throw_exception
-        return raise('not found name')
-      end
-      case name
-      when :request_timestamp
-        Time.parse(find_label('Timestamp')) if find_label('Timestamp', throw_exception: throw_exception)
-      else
-        find_label(NAME_TABLE[name], throw_exception: throw_exception)
-      end
-    end
 
     def exists?(name)
       name = name.to_s unless name.is_a?(String)
       @body.include?(name)
     end
 
+
+    def find_value(name, throw_exception: true)
+      if !NAME_TABLE.key?(name) && throw_exception
+        return raise('not found name')
+      end
+      name_to_s = NAME_TABLE[name].to_s
+      if exists?(name_to_s)
+        find(/#{name_to_s} *: "?(.+?)"?$/, throw_exception: throw_exception)
+      end
+    end
+
     def find(regexp, throw_exception: )
       @body =~ regexp
       $1 || (throw_exception ? raise(ExceptionNotification::Parser::Error, 'parse failed') : nil)
-    end
-
-    def find_label(name, throw_exception: true)
-      name_to_s = name.to_s
-      if @body.include?(name_to_s)
-        find(/#{name_to_s} *: "?(.+?)"?$/, throw_exception: throw_exception)
-      end
     end
   end
 end

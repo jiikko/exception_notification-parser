@@ -63,7 +63,7 @@ describe ExceptionNotification::Parser::Struct do
         expect(struct.get(:request_url)).to eq 'http://exmple.com/home/path_to'
         expect(struct.get(:request_http_method)).to eq 'POST'
         expect(struct.get(:request_ip_address)).to eq '256.183.183.25'
-        expect(struct.get(:request_timestamp)).to eq(Time.parse '2016-03-27 16:59:28 +0900')
+        expect(struct.get(:request_timestamp)).to eq('2016-03-27 16:59:28 +0900')
         expect(struct.get(:requist_rails_root)).to eq '/var/www/mail_admin/releases/20160316153334'
         expect(struct.get(:session_id)).to eq 'e6832'
         expect(struct.get(:environment_content_length)).to eq '128'
