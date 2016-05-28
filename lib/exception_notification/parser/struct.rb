@@ -79,9 +79,9 @@ module ExceptionNotification::Parser
       if !NAME_TABLE.key?(name) && throw_exception
         return raise('not found name')
       end
-      name_to_s = NAME_TABLE[name].to_s
-      if @body.include?(name_to_s)
-        find(/#{name_to_s} *: "?(.+?)"?$/, throw_exception: throw_exception)
+      label = NAME_TABLE[name] || name.to_s
+      if @body.include?(label)
+        find(/#{label} *: "?(.+?)"?$/, throw_exception: throw_exception)
       end
     end
 
