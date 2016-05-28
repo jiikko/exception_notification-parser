@@ -51,7 +51,7 @@ module ExceptionNotification::Parser
     end
 
     def test(name)
-      if exists?(NAME_TABLE[name] || name)
+      if @body.include?(NAME_TABLE[name] || name.to_s)
         value = find_value(name, throw_exception: false)
         return (value && true) || ((@parse_failure_names << name) && false)
       else
@@ -75,18 +75,12 @@ module ExceptionNotification::Parser
 
     private
 
-    def exists?(name)
-      name = name.to_s unless name.is_a?(String)
-      @body.include?(name)
-    end
-
-
-    def find_value(name, throw_exception: true)
+    def find_value(name, throw_exception: )
       if !NAME_TABLE.key?(name) && throw_exception
         return raise('not found name')
       end
       name_to_s = NAME_TABLE[name].to_s
-      if exists?(name_to_s)
+      if @body.include?(name_to_s)
         find(/#{name_to_s} *: "?(.+?)"?$/, throw_exception: throw_exception)
       end
     end
